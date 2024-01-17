@@ -35,10 +35,10 @@ namespace func {
             }
         }
 
-         return true;
+        return true;
     }
 
-    std::vector<int64_t> all_primes_less_than(int64_t n) {
+    std::vector<int64_t> candidate_primes_less_than(int64_t n) {
         std::vector<int64_t> all_primes_less_than_n = {2};
         for (int64_t i = 3; i < n; i+=2) {
             if (is_prime(i)) {
