@@ -38,13 +38,23 @@ namespace func {
         return true;
     }
 
-    std::vector<int64_t> candidate_primes_less_than(int64_t n) {
-        std::vector<int64_t> all_primes_less_than_n = {2};
-        for (int64_t i = 3; i < n; i+=2) {
-            if (is_prime(i)) {
-                all_primes_less_than_n.push_back(i);
+    bool contains_any_of(std::vector<char> chars, std::string num_str) {
+        for (int i = 0; i < static_cast<int>(chars.size()); i++) {
+            if (num_str.find(chars[i]) != std::string::npos) {
+                return true;
             }
         }
-        return all_primes_less_than_n;
+        return false;
+    }
+
+    std::vector<int64_t> candidate_primes_less_than(int64_t n) {
+        std::vector<char> char_vec = {'0', '2', '4', '5', '6', '8'};
+        std::vector<int64_t> candidate_primes_less_than_n = {2};
+        for (int64_t i = 3; i < n; i+=2) {
+            if (is_prime(i) && !contains_any_of(char_vec, std::to_string(i))) { //&& !contains(0,2,4,5,6,8).
+                candidate_primes_less_than_n.push_back(i);
+            }
+        }
+        return candidate_primes_less_than_n;
     }
 }
