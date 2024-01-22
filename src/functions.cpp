@@ -57,4 +57,8 @@ namespace func {
         }
         return candidate_primes_less_than_n;
     }
+
+    int new_index(int current_index, int string_length) {
+        return (current_index + 1) % string_length;
+    }
 }
