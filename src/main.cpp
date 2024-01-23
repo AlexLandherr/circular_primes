@@ -14,7 +14,7 @@ How many circular primes are there below one million?
 */
 
 int main() {
-    try {
+    /* try {
         std::vector<int64_t> result = func::candidate_primes_less_than(1000000);
         int64_t prime_count = static_cast<int64_t>(result.size());
         std::cout << "Candidate primes below 1e6: " << prime_count << '\n';
@@ -22,10 +22,15 @@ int main() {
         std::cerr << ex.what() << '\n';
     } catch (const std::exception& ex) {
         std::cerr << ex.what() << '\n';
-    }
+    } */
     /* std::vector<char> char_vec = {'0', '2', '4', '5', '6', '8'};
     std::string num_str = "132";
     std::cout << "Does num_str contain any of the characters in char_vec?: " << std::boolalpha << func::contains_any_of(char_vec, num_str) << '\n'; */
+    int64_t start_number = 197;
+    std::vector<int64_t> all_rotations_result = func::all_rotations_of(start_number);
+    for (std::size_t i = 0; i < all_rotations_result.size(); i++) {
+        std::cout << (i + 1) << " rotation: " << all_rotations_result[i] << '\n';
+    }
 
     return 0;
 }

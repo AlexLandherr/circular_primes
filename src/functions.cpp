@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <vector>
 #include <cstdint>
+#include <unordered_map>
 
 /*
 The number, 197, is called a circular prime because all rotations of the digits: 197, 971, and 719, are themselves prime.
@@ -60,5 +61,28 @@ namespace func {
 
     int new_index(int current_index, int string_length) {
         return (current_index + 1) % string_length;
+    }
+
+    std::vector<int64_t> all_rotations_of(int64_t num) {
+        std::vector<int64_t> all_rotations = {num};
+        std::string start_num = std::to_string(num);
+
+        for (int k = 0; k < static_cast<int>(start_num.length()) - 1; k++) {
+            std::unordered_map<int, char> index_char_pairs;
+            std::string next_rotation = "";
+        
+            for (int i = 0; i < static_cast<int>(start_num.length()); i++) {
+                index_char_pairs[new_index(i, static_cast<int>(start_num.length()))] = start_num[i];
+            }
+        
+            for (int j = 0; j < static_cast<int>(start_num.length()); j++) {
+                next_rotation.push_back(index_char_pairs.at(j));
+            }
+            
+            all_rotations.push_back(std::stoll(next_rotation));
+            start_num = next_rotation;
+        }
+
+        return all_rotations;
     }
 }
