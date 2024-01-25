@@ -7,14 +7,6 @@
 #include <cstdint>
 #include <unordered_map>
 
-/*
-The number, 197, is called a circular prime because all rotations of the digits: 197, 971, and 719, are themselves prime.
-
-There are thirteen such primes below 100: 2, 3, 5, 7, 11, 13, 17, 31, 37, 71, 73, 79, and 97.
-
-How many circular primes are there below one million?
-*/
-
 namespace func {
     bool is_prime(int64_t n) {
         //Checks if a single signed 64-bit integer is a prime number.
@@ -49,7 +41,7 @@ namespace func {
     }
 
     std::vector<int64_t> candidate_primes_less_than(int64_t n) {
-        std::vector<char> char_vec = {'0', '2', '4', '5', '6', '8'};
+        std::vector<char> char_vec = {'0', '2', '4', '6', '8'};
         std::vector<int64_t> candidate_primes_less_than_n = {2};
         for (int64_t i = 3; i < n; i+=2) {
             if (is_prime(i) && !contains_any_of(char_vec, std::to_string(i))) { //&& !contains(0,2,4,5,6,8).
@@ -78,11 +70,36 @@ namespace func {
             for (int j = 0; j < static_cast<int>(start_num.length()); j++) {
                 next_rotation.push_back(index_char_pairs.at(j));
             }
-            
+
             all_rotations.push_back(std::stoll(next_rotation));
             start_num = next_rotation;
         }
 
         return all_rotations;
+    }
+
+    int64_t circular_primes_less_than(int64_t n) {
+        int64_t circular_prime_count = 0;
+        std::vector<int64_t> candidates = candidate_primes_less_than(n);
+
+        for (std::size_t i = 0; i < candidates.size(); i++) {
+            int64_t current_candidate = candidates[i];
+            std::vector<int64_t> all_rotations_of_current = all_rotations_of(current_candidate);
+            bool all_rotations_prime = true;
+
+            for (std::size_t j = 1; j < all_rotations_of_current.size(); j++) {
+                if (std::find(candidates.begin(), candidates.end(), all_rotations_of_current[j]) != candidates.end()) {
+                    continue;
+                } else {
+                    all_rotations_prime = false;
+                }
+            }
+
+            if (all_rotations_prime) {
+                circular_prime_count++;
+            }
+        }
+
+        return circular_prime_count;
     }
 }
